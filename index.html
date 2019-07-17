@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        class Human {
+            constructor (name, age, salary) {
+                this.name = name
+                this.age = age
+                this.salary = salary
+                this.earned = 0
+            }
+            
+            sayHello () {
+                alert('Hello')
+            }
+
+            goWork () {
+                let hrs = this._ask ()
+                this.earned = this._count (hrs)
+            }
+
+            _ask () {
+                return +prompt ('Enter working time')
+            }
+
+            _count (a) {
+                return this.salary * a
+            }
+        }
+
+        
+        let vasya = new Human ('Vasily', 20, 1000)
+        let petya = new Human ('Pyotr', 30, 2000)
+    </script>
+</body>
+</html>
