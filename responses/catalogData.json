@@ -1,0 +1,32 @@
+[
+  {
+    "id_product": 111,
+    "product_name": "Ноутбук",
+    "price": 45600
+  },
+  {
+    "id_product": 112,
+    "product_name": "Мышь",
+    "price": 1000
+  },
+  {
+    "id_product": 113,
+    "product_name": "Монитор",
+    "price": 15000
+  },
+  {
+    "id_product": 114,
+    "product_name": "Наушники",
+    "price": 5000
+  },
+  {
+    "id_product": 115,
+    "product_name": "Коврик",
+    "price": 500
+  },
+  {
+    "id_product": 116,
+    "product_name": "Колонки",
+    "price": 3500
+  }
+]
