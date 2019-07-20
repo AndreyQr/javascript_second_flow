@@ -1,23 +1,29 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
+const API_URL = 'https://raw.githubusercontent.com/AndreyQr/javascript_second_flow/master/responses'
 
-const items = ['Notebook', 'Display', 'Keyboard', 'Mouse', 'Phones', 'Router', 'USB-camera', 'Gamepad'];
-const prices = [1000, 200, 20, 10, 25, 30, 18, 24];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8];
-
-function fetchData () {
-	let arr = [];
-	for (let i = 0; i < items.length; i++) {
-		arr.push ({
-			id: ids[i],
-			title: items[i],
-			price: prices[i],
-			img: image,
-		});
+function makeGETRequest(url, callback) {
+	let xhr;
+  
+	if (window.XMLHttpRequest) {
+	  xhr = new XMLHttpRequest();
+	} else if (window.ActiveXObject) { 
+	  xhr = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	return arr
+  
+	xhr.onreadystatechange = function () {
+	  if (xhr.readyState === 4) {
+		callback(xhr.responseText);
+	  }
+	}
+  
+	xhr.open('GET', url, true);
+	xhr.send();
 }
+  
+
+
 
 //Глобальные сущности 
 var userCart = [];
@@ -29,13 +35,10 @@ class List {
 		this.goods = []
 		this._init ()
 		this.allProducts = []
-		this.handleData (fetchData())
 	}
-	handleData (data) {
-		this.goods = [...data]
-		this._render ()
-	}
+
 	_init () {
+		
 		return false
 	}
 	_render () {
@@ -53,6 +56,14 @@ class ProductsList extends List {
 		super (container)
 	}
 
+	fetchGoods () {
+		makeGETRequest(`${API_URL}/catalogData.json`, (goods) => {
+			this.goods = JSON.parse(goods);
+			this._render ()
+		  })
+		  
+		}
+
 }
 
 class Cart extends List {
@@ -61,7 +72,7 @@ class Cart extends List {
 
 class Item {
 	constructor (el, img = 'https://placehold.it/200x150') {
-		this.product_name = el.title
+		this.product_name = el.product_name
 		this.price = el.price
 		this.id_product = el.id
 		this.img = img
@@ -94,6 +105,31 @@ let lists = {
 	Cart: CartItem
 }
 
+let list = new ProductsList ()
+list.fetchGoods ()
+//-------------------------------------
+let promiseTry = (fetchGoods) => {
+	return new Promise ((resolve, reject) => {
+		setTimeout (() => {
+			if (fetchGoods) {
+				let b = fetchGoods
+				resolve (b)
+			} else {
+				reject ('Error')
+			}
+		}, 2000)
+	})
+}
+
+promiseTry (this.goods)
+	.then (result => {
+		console.log (result)
+	})
+	.catch (error => {
+		console.log (error)
+	})
+
+promiseTry ()
 // ИЗИ СПОСОБ
 // class ProductList {
 // 	constructor () {
