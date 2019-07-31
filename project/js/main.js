@@ -1,16 +1,12 @@
 //заглушки (имитация базы данных)
 const image = 'https://placehold.it/200x150';
 const cartImage = 'https://placehold.it/100x80';
-const API_URL = 'https://raw.githubusercontent.com/AndreyQr/javascript_second_flow/master/responses';
+const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
 let app = new Vue ({
 	el: '#app',
 	data: {
-		imgCatalog: 'https://placehold.it/200x150',
-		products: [],
-		catalogUrl: `/catalogData.json`,
-		filteredGoods: [],
-		searchLine : ''
+		userSearch: '',
 	},
 	methods: {
 		getJSON (url) {
@@ -20,21 +16,23 @@ let app = new Vue ({
 					console.log (error)
 			})
 		},
-		addProduct (product) {
-			console.log (product.id_product)
+		
+		filter () {
+			let regExp = new RegExp (this.userSearch, 'i')
+			this.filtered = this.products.filter (el => regExp.test (el.product_name))
 		}
 	},
 	mounted () {
-		this.getJSON(`${API_URL + this.catalogUrl}`)
-			.then (data => {
-				for (let el of data) {
-					this.products.push (el)
-				}
-			})
+		// this.getJSON(`${API_URL + this.catalogUrl}`)
+		// 	.then (data => {
+		// 		for (let el of data) {
+		// 			this.products.push (el)
+		// 			this.filtered.push (el)
+		// 		}
+		// 	})
 	},
-	filterGoods() {
-		//А как он должен осуществлять поиск я не знаю
-		alert ( products /searchLine/ig);
+	components: {
+		products
 	}
 })
 
